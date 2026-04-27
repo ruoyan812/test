@@ -6,7 +6,6 @@
 <h1 style="text-align:center; color:#8b0000;">
   欢迎来到 <b>测试</b> 页面
 </h1>
-
 <style>
     body {
         margin: 0;
@@ -66,18 +65,15 @@
         word-break: break-all;
     }
 
-    /* 手机端适配 */
     @media (max-width: 600px) {
         .container {
             margin: 10px;
             padding: 15px;
         }
-
         input {
             font-size: 14px;
             padding: 12px;
         }
-
         h2 {
             font-size: 18px;
         }
@@ -88,12 +84,12 @@
 <body>
 
 <div class="container">
-    <h2>📖 试卷搜索</h2>
+    <h2>📖 敦煌知识搜索</h2>
 
     <input
         id="keyword"
         type="text"
-        placeholder="输入 ID、标题或关键词，如：1 / 飞天 / 莫高窟"
+        placeholder="输入 ID 或标题，如：1 / 莫高窟"
         autocomplete="off"
     />
 
@@ -103,9 +99,9 @@
 
 <script>
 let timer = null;
+// ✅ 已根据你的仓库 ruoyan812/test 修复路径
 const dataUrl = "/test/data/list.txt?v=" + Date.now();
 
-/* 自动把 URL 变成可点击链接 */
 function linkify(text) {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, url =>
@@ -130,22 +126,28 @@ async function search() {
 
     try {
         const res = await fetch(dataUrl);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+
         const text = await res.text();
 
         const items = text.split("---").map(block => {
             const obj = {};
             block.trim().split("\n").forEach(line => {
                 const idx = line.indexOf(":");
-                const k = line.slice(0, idx).trim();
-                const v = line.slice(idx + 1).trim();
-                if (k && v) obj[k.trim()] = v.trim();
+                if (idx !== -1) {
+                    const k = line.slice(0, idx).trim();
+                    const v = line.slice(idx + 1).trim();
+                    obj[k] = v;
+                }
             });
             return obj;
         });
 
-        const results = items.filter(item =>
-            (item.id + item.title).includes(keyword)
-        );
+        // ✅ 只搜索 id 和 title
+        const results = items.filter(item => {
+            const searchScope = (item.id || "") + (item.title || "");
+            return searchScope.includes(keyword);
+        });
 
         countDiv.innerText = `共找到 ${results.length} 条结果`;
 
@@ -171,7 +173,8 @@ async function search() {
         });
 
     } catch (e) {
-        resultsDiv.innerHTML = "<div class='result'>加载数据失败，请检查 list.txt 路径</div>";
+        resultsDiv.innerHTML = `<div class='result'>加载数据失败：${e.message}<br>请确认路径：${dataUrl}</div>`;
+        console.error(e);
     }
 }
 </script>
