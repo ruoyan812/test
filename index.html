@@ -144,7 +144,7 @@ async function search() {
         });
 
         const results = items.filter(item =>
-            JSON.stringify(item).includes(keyword)
+            (item.id + item.title).includes(keyword)
         );
 
         countDiv.innerText = `共找到 ${results.length} 条结果`;
