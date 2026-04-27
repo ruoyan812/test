@@ -190,15 +190,13 @@ document.addEventListener("click", function (e) {
     const href = link.getAttribute("href");
     if (!href) return;
 
-    if (
-        !href.startsWith(window.location.origin) &&
-        !href.startsWith("#") &&
-        !href.startsWith("javascript:")
-    ) {
-        e.preventDefault();
-        if (confirm("您即将跳转到外部网站：\n" + href + "\n\n确定要继续吗？")) {
-            window.open(href, "_blank");
-        }
+    // 忽略锚点、JS
+    if (href.startsWith("#") || href.startsWith("javascript:")) return;
+
+    e.preventDefault();
+
+    if (confirm("您即将跳转到：\n" + href + "\n\n确定要继续吗？")) {
+        window.open(href, "_blank");
     }
 });
 </script>
