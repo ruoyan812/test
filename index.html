@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>敦煌知识搜索</title>
+<title>测试搜索</title>
+<h2>欢迎来到 <h1>测试</h1> 页面</h2>
 
 <style>
     body {
@@ -85,7 +86,7 @@
 <body>
 
 <div class="container">
-    <h2>📖 敦煌知识搜索</h2>
+    <h2>📖 试卷搜索</h2>
 
     <input
         id="keyword"
@@ -132,7 +133,9 @@ async function search() {
         const items = text.split("---").map(block => {
             const obj = {};
             block.trim().split("\n").forEach(line => {
-                const [k, v] = line.split(":");
+                const idx = line.indexOf(":");
+                const k = line.slice(0, idx).trim();
+                const v = line.slice(idx + 1).trim();
                 if (k && v) obj[k.trim()] = v.trim();
             });
             return obj;
