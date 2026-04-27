@@ -182,6 +182,29 @@ async function search() {
     });
 }
 </script>
+<script>
+document.addEventListener("click", function (e) {
+    const link = e.target.closest("a");
 
+    if (
+        link &&
+        link.href &&
+        !link.href.startsWith(location.origin) &&
+        !link.href.startsWith("javascript:")
+    ) {
+        e.preventDefault();
+
+        const ok = confirm(
+            "您即将前往答题页面：\n" +
+            link.href +
+            "\n\n确定要前往吗？"
+        );
+
+        if (ok) {
+            window.open(link.href, "_blank");
+        }
+    }
+});
+</script>
 </body>
 </html>
