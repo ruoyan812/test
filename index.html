@@ -2,8 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>测试</title>
-<h2>欢迎来到 <strong>测试</strong> 页面！</h2>
+<title>敦煌知识搜索</title>
 
 <style>
     body {
@@ -53,6 +52,17 @@
         color: #333;
     }
 
+    .id {
+        font-size: 12px;
+        color: #999;
+        margin-bottom: 6px;
+    }
+
+    .result a {
+        color: #b22222;
+        word-break: break-all;
+    }
+
     /* 手机端适配 */
     @media (max-width: 600px) {
         .container {
@@ -75,12 +85,12 @@
 <body>
 
 <div class="container">
-    <h2>📖 试卷搜索</h2>
+    <h2>📖 敦煌知识搜索</h2>
 
     <input
         id="keyword"
         type="text"
-        placeholder="输入关键词，如：莫高窟、飞天"
+        placeholder="输入 ID、标题或关键词，如：1 / 飞天 / 莫高窟"
         autocomplete="off"
     />
 
@@ -91,6 +101,14 @@
 <script>
 let timer = null;
 const dataUrl = "/data/list.txt";
+
+/* 自动把 URL 变成可点击链接 */
+function linkify(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, url =>
+        `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+    );
+}
 
 document.getElementById("keyword").addEventListener("input", () => {
     clearTimeout(timer);
@@ -134,10 +152,16 @@ async function search() {
         results.forEach(r => {
             const div = document.createElement("div");
             div.className = "result";
+
             div.innerHTML = `
-                <h3>${r.title || "无标题"}</h3>
-                <p>${r.content || "无内容"}</p>
+                <div class="id">ID：${r.id || "未知"}</div>
+                <h3></h3>
+                <p></p>
             `;
+
+            div.querySelector("h3").textContent = r.title || "无标题";
+            div.querySelector("p").innerHTML = linkify(r.content || "无内容");
+
             resultsDiv.appendChild(div);
         });
 
