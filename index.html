@@ -185,23 +185,19 @@ async function search() {
 <script>
 document.addEventListener("click", function (e) {
     const link = e.target.closest("a");
+    if (!link) return;
+
+    const href = link.getAttribute("href");
+    if (!href) return;
 
     if (
-        link &&
-        link.href &&
-        !link.href.startsWith(location.origin) &&
-        !link.href.startsWith("javascript:")
+        !href.startsWith(window.location.origin) &&
+        !href.startsWith("#") &&
+        !href.startsWith("javascript:")
     ) {
         e.preventDefault();
-
-        const ok = confirm(
-            "您即将前往答题页面：\n" +
-            link.href +
-            "\n\n确定要前往吗？"
-        );
-
-        if (ok) {
-            window.open(link.href, "_blank");
+        if (confirm("您即将跳转到外部网站：\n" + href + "\n\n确定要继续吗？")) {
+            window.open(href, "_blank");
         }
     }
 });
