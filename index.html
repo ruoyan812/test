@@ -1,2 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
 <title>测试</title>
 <h2>欢迎来到 <strong>测试</strong> 页面！</h2>
+
+<style>
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
+        background: #f5f5f5;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #8b0000;
+    }
+
+    input {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+    .count {
+        margin: 15px 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .result {
+        padding: 15px;
+        margin-bottom: 12px;
+        background: #fafafa;
+        border-left: 5px solid #b22222;
+        border-radius: 4px;
+    }
+
+    .result h3 {
+        margin: 0 0 8px;
+        color: #333;
+    }
+
+    /* 手机端适配 */
+    @media (max-width: 600px) {
+        .container {
+            margin: 10px;
+            padding: 15px;
+        }
+
+        input {
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        h2 {
+            font-size: 18px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📖 试卷搜索</h2>
+
+    <input
+        id="keyword"
+        type="text"
+        placeholder="输入关键词，如：莫高窟、飞天"
+        autocomplete="off"
+    />
+
+    <div class="count" id="count"></div>
+    <div id="results"></div>
+</div>
+
+<script>
+let timer = null;
+const dataUrl = "/data/list.txt";
+
+document.getElementById("keyword").addEventListener("input", () => {
+    clearTimeout(timer);
+    timer = setTimeout(search, 300);
+});
+
+async function search() {
+    const keyword = document.getElementById("keyword").value.trim();
+    const resultsDiv = document.getElementById("results");
+    const countDiv = document.getElementById("count");
+
+    resultsDiv.innerHTML = "";
+    countDiv.innerText = "";
+
+    if (!keyword) return;
+
+    try {
+        const res = await fetch(dataUrl);
+        const text = await res.text();
+
+        const items = text.split("---").map(block => {
+            const obj = {};
+            block.trim().split("\n").forEach(line => {
+                const [k, v] = line.split(":");
+                if (k && v) obj[k.trim()] = v.trim();
+            });
+            return obj;
+        });
+
+        const results = items.filter(item =>
+            JSON.stringify(item).includes(keyword)
+        );
+
+        countDiv.innerText = `共找到 ${results.length} 条结果`;
+
+        if (results.length === 0) {
+            resultsDiv.innerHTML = "<div class='result'>未找到相关内容</div>";
+            return;
+        }
+
+        results.forEach(r => {
+            const div = document.createElement("div");
+            div.className = "result";
+            div.innerHTML = `
+                <h3>${r.title || "无标题"}</h3>
+                <p>${r.content || "无内容"}</p>
+            `;
+            resultsDiv.appendChild(div);
+        });
+
+    } catch (e) {
+        resultsDiv.innerHTML = "<div class='result'>加载数据失败，请检查 list.txt 路径</div>";
+    }
+}
+</script>
+
+</body>
+</html>
