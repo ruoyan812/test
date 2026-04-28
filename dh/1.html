@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>敦煌测试题</title>
+
+<style>
+  .btn-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 50px;
+  }
+
+  .nav-btn {
+    padding: 8px 20px;
+    background-color: #5bc7fb;   /* 按钮颜色 */
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;              /* 白色文字 */
+    font-size: 16px;
+    font-weight: normal;         /* 不加粗 */
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  /* 鼠标悬停效果 */
+  .nav-btn:hover {
+    background-color: #3db5ea;
+  }
+</style>
+</head>
+
+<body>
+<a><strong>这是一个关于敦煌方面知识的习题,共十题</strong></a><br>
+<a>加油作答吧 ！</a>
+<div class="btn-container">
+  <button class="nav-btn" onclick="goBack()">上一步</button>
+  <button class="nav-btn" onclick="goNext()">下一步</button>
+</div>
+
+<script>
+  function goBack() {
+    window.location.href = "https://test.xinyilou.dpdns.org/dh/index.html"; // 上一步默认页
+  }
+
+  function goNext() {
+    window.location.href = "https:test.xinyilou.dpdns.org/dh/test.html";   // 下一步目标页
+  }
+</script>
+<h1 align="center">
+  <strong>© 2013 - 2026 Yanverse</strong>
+</h1>
+</body>
+</html>
