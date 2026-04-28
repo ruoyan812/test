@@ -1,41 +1,35 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>敦煌测试题</title>
-  <style>
-    .btn-container {
-      display: flex;
-      gap: 15px;
-      margin-top: 50px;
-    }
+<meta charset="UTF-8">
+<title>上一步 / 下一步</title>
 
-    .nav-btn {
-      padding: 8px 20px;
-      background: linear-gradient(to bottom, #4a90e2, #2a6bd6);
-      border: 1px solid #1c5aa8;
-      border-radius: 5px;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-      transition: background 0.2s;
-      font-family: "Microsoft YaHei", sans-serif;
-      letter-spacing: 1px;
-    }
+<style>
+  .btn-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 50px;
+  }
 
-    .nav-btn:hover {
-      background: linear-gradient(to bottom, #5aa0f0, #3a7be6);
-    }
+  .nav-btn {
+    padding: 8px 20px;
+    background-color: #5bc7fb;   /* 按钮颜色 */
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;              /* 白色文字 */
+    font-size: 16px;
+    font-weight: normal;         /* 不加粗 */
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
 
-    .nav-btn:active {
-      background: linear-gradient(to bottom, #3a7be6, #2a6bd6);
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-    }
-  </style>
+  /* 鼠标悬停效果 */
+  .nav-btn:hover {
+    background-color: #3db5ea;
+  }
+</style>
 </head>
+
 <body>
 
 <div class="btn-container">
@@ -45,18 +39,15 @@
 
 <script>
   function goBack() {
-    // 优先返回上一页
     if (window.history.length > 1) {
       window.history.back();
     } else {
-      // 如果没有历史记录，跳转到默认页面
-      window.location.href = "https://www.example.com"; // 👈 替换成你想要的“上一步”目标网址
+      window.location.href = "https://example.com"; // 上一步默认页
     }
   }
 
   function goNext() {
-    // 跳转到“下一步”目标网址
-    window.location.href = "https://www.example.com"; // 👈 替换成你想要的“下一步”目标网址
+    window.location.href = "https://example.com";   // 下一步目标页
   }
 </script>
 
