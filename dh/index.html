@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>上一步 / 下一步</title>
+<title>敦煌测试题</title>
 
 <style>
   .btn-container {
@@ -31,23 +31,14 @@
 </head>
 
 <body>
-
+<a><strong>欢迎来到敦煌测试题！</strong></a>
 <div class="btn-container">
-  <button class="nav-btn" onclick="goBack()">上一步</button>
   <button class="nav-btn" onclick="goNext()">下一步</button>
 </div>
 
 <script>
-  function goBack() {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = "https://example.com"; // 上一步默认页
-    }
-  }
-
   function goNext() {
-    window.location.href = "https://example.com";   // 下一步目标页
+    window.location.href = "https://test.xinyilou.dpdns.org/1.html";   // 下一步目标页
   }
 </script>
 
