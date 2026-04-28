@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>敦煌文化知识问答</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: linear-gradient(135deg, #f5e1c0, #f9f3e6);
+            color: #4a2f1a;
+        }
+        header {
+            background: linear-gradient(90deg, #b22222, #d2691e);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-bottom: 5px solid #8b4513;
+        }
+        main {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: #fffaf0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        }
+        h2 {
+            color: #8b0000;
+            border-left: 6px solid #cd5c5c;
+            padding-left: 10px;
+        }
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff3e0;
+            border-radius: 10px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin: 6px 0;
+            cursor: pointer;
+        }
+        button {
+            background: #b22222;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #8b0000;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #006400;
+        }
+        footer {
+            background: #4a2f1a;
+            color: #f5e1c0;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        footer a {
+            color: #ffd700;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .gallery {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .gallery img {
+            width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🏜️ 敦煌文化知识问答</h1>
+    <p>走进千年丝路 · 探索壁画与飞天的奥秘</p>
+    <img src="https://q0.itc.cn/q_70/images03/20250530/b55e8f3bd3f74456a48b0b2c55caa235.png" width="1000" height="800"
+         alt="敦煌莫高窟全景">
+</header>
+
+<main>
+
+    <h2>🌟 敦煌印象</h2>
+        <img src="https://img0.baidu.com/it/u=509718615,1394352256&fm=253&app=138&f=JPEG?w=686&h=500" width="500" height="400"
+             alt="莫高窟第45窟">
+        <img src="https://gips2.baidu.com/it/u=9190755,3697306137&fm=3074&app=3074&f=JPEG" width="300" height="400"
+             alt="敦煌飞天">
+
+    <h2>📚 知识问答（共 10 题）</h2>
+
+    <div id="quiz"></div>
+
+    <button onclick="checkAnswers()">提交并查看结果</button>
+
+    <div class="result" id="result"></div>
+
+    <h2>🔗 相关机构与官方网站</h2>
+    <ul>
+        <li><a href="https://www.dha.ac.cn/" target="_blank">敦煌研究院官网</a></li>
+        <li><a href="http://www.ncha.gov.cn/" target="_blank">国家文物局</a></li>
+        <li><a href="https://www.chinaculture.org/" target="_blank">中国文化网</a></li>
+        <li><a href="https://whc.unesco.org/zh/list/440/" target="_blank">UNESCO 莫高窟世界遗产介绍</a></li>
+        <li><a href="https://www.e-dunhuang.com/" target="_blank">数字敦煌（在线浏览壁画）</a></li>
+    </ul>
+
+</main>
+
+<footer>
+    <p>© 2026 敦煌文化知识问答 | 教育与公益用途</p>
+    <p>
+        <a href="https://www.dha.ac.cn/">敦煌研究院</a>
+        <a href="https://www.e-dunhuang.com/">数字敦煌</a>
+    </p>
+</footer>
+
+<script>
+    const quizData = [
+        {
+            q: "莫高窟始建于哪个朝代？",
+            options: ["秦朝", "汉朝", "前秦", "唐朝"],
+            answer: 2
+        },
+        {
+            q: "敦煌位于今天的哪个省份？",
+            options: ["陕西", "甘肃", "新疆", "青海"],
+            answer: 1
+        },
+        {
+            q: "“飞天”形象主要出现在哪种艺术形式中？",
+            options: ["雕塑", "壁画", "书法", "建筑"],
+            answer: 1
+        },
+        {
+            q: "藏经洞发现于哪一年？",
+            options: ["1899", "1900", "1910", "1921"],
+            answer: 1
+        },
+        {
+            q: "莫高窟现存洞窟大约有多少座？",
+            options: ["200多", "400多", "700多", "1000多"],
+            answer: 2
+        },
+        {
+            q: "敦煌壁画主要使用哪种颜料？",
+            options: ["化学颜料", "矿物颜料", "植物颜料", "金属颜料"],
+            answer: 1
+        },
+        {
+            q: "“九层楼”是莫高窟哪一窟的标志性建筑？",
+            options: ["第96窟", "第45窟", "第17窟", "第257窟"],
+            answer: 0
+        },
+        {
+            q: "敦煌艺术主要融合了哪些文化元素？",
+            options: ["中原与草原", "佛教与道教", "中西文化交流", "儒家与法家"],
+            answer: 2
+        },
+        {
+            q: "数字敦煌项目的主要作用是什么？",
+            options: ["商业开发", "虚拟旅游", "文物保护与传播", "影视拍摄"],
+            answer: 2
+        },
+        {
+            q: "莫高窟被列入《世界文化遗产名录》是在？",
+            options: ["1985", "1987", "1990", "1995"],
+            answer: 1
+        }
+    ];
+
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((item, index) => {
+        let html = `<div class="question">
+            <p>${index + 1}. ${item.q}</p>`;
+        item.options.forEach((opt, i) => {
+            html += `<label>
+                <input type="radio" name="q${index}" value="${i}"> ${opt}
+            </label>`;
+        });
+        html += `</div>`;
+        quizContainer.innerHTML += html;
+    });
+
+    function checkAnswers() {
+        let score = 0;
+        quizData.forEach((item, index) => {
+            const radios = document.getElementsByName(`q${index}`);
+            for (let r of radios) {
+                if (r.checked && parseInt(r.value) === item.answer) {
+                    score++;
+                }
+            }
+        });
+        document.getElementById("result").innerText =
+            `您的得分：${score} / ${quizData.length}`;
+    }
+</script>
+<h1 align="center">
+  <strong>© 2013 - 2026 Yanverse</strong>
+</h1>
+</body>
+</html>
